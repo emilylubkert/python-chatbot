@@ -1,7 +1,7 @@
 import os
 from openai import OpenAI
 from dotenv import load_dotenv, find_dotenv
-_ = load_dotenv(find_dotenv('.env')) # read local .env file
+_ = load_dotenv(find_dotenv('.env'))
 
 client = OpenAI(
 api_key  = os.getenv('OPENAI_API_KEY')
@@ -22,7 +22,7 @@ def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=0)
         messages=messages,
         temperature=temperature, 
     )
-    print(str(response.choices[0].message))
+    # print(str(response.choices[0].message))
     return response.choices[0].message["content"]
 
 messages =  [  
@@ -34,8 +34,18 @@ messages =  [
 response = get_completion_from_messages(messages, temperature=1)
 print(response)
 
+
 messages =  [  
 {'role':'system', 'content':'You are friendly chatbot.'},    
 {'role':'user', 'content':'Hi, my name is Isa'}  ]
+response = get_completion_from_messages(messages, temperature=1)
+print(response)
+
+messages =  [  
+{'role':'system', 'content':'You are friendly chatbot.'},
+{'role':'user', 'content':'Hi, my name is Isa'},
+{'role':'assistant', 'content': "Hi Isa! It's nice to meet you. \
+Is there anything I can help you with today?"},
+{'role':'user', 'content':'Yes, you can remind me, What is my name?'}  ]
 response = get_completion_from_messages(messages, temperature=1)
 print(response)
